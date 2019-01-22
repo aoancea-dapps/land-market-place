@@ -1,4 +1,4 @@
-prama solidity ^0.4.11;
+pragma solidity ^0.5.0;
 
 contract LandContract {
     address owner;
@@ -7,9 +7,7 @@ contract LandContract {
     
     struct Plot {
         address owner;
-        
         bool forSale;
-        
         uint price;
     }
     
@@ -70,7 +68,7 @@ contract LandContract {
         emit PlotAvailabilityChanged(index, plot.price, false);
     }
     
-    function getPlots() public view returns(address[], bool[], uint[]) {
+    function getPlots() public view returns(address[] memory, bool[] memory, uint[] memory) {
         address[] memory addrs = new address[](12);
         bool[] memory available = new bool[](12);
         uint[] memory price = new uint[](12);
@@ -91,7 +89,7 @@ contract LandContract {
         
         require(msg.sender != plot.owner && plot.forSale && msg.value >= plot.price);
         
-        if(plot.owner == 0x0) {
+        if(plot.owner == address(0)) {
             balances[owner] += msg.value;
         } else {
             balances[plot.owner] += msg.value;
@@ -104,7 +102,7 @@ contract LandContract {
     }
     
     function withdrawFunds() public {
-        address payee = msg.sender;
+        address payable payee = msg.sender;
         
         uint payment = balances[payee];
         
@@ -112,12 +110,12 @@ contract LandContract {
         
         balances[payee] = 0;
         
-        require(payee.send(payment));
+        payee.transfer(payment);
     }
     
     function destroy() payable public {
         require(msg.sender == owner);
         
-        selfdestruct(owner);
+        selfdestruct(msg.sender);
     }   
 }
