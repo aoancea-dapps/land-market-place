@@ -18,3 +18,15 @@
 09:27:16.401138 db@open done T·9.0225ms
 09:28:07.793245 db@close closing
 09:28:07.794244 db@close done T·999.5µs
+=============== Jan 22, 2019 (EET) ===============
+09:29:43.381644 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+09:29:43.381644 version@stat F·[1] S·10KiB[10KiB] Sc·[0.25]
+09:29:43.381644 db@open opening
+09:29:43.381644 journal@recovery F·1
+09:29:43.381644 journal@recovery recovering @3
+09:29:43.384645 memdb@flush created L0@5 N·320 S·11KiB "n:\v..ail,v602":"n:\xfc..ong,v615"
+09:29:43.384645 version@stat F·[2] S·22KiB[22KiB] Sc·[0.50]
+09:29:43.391649 db@janitor F·4 G·0
+09:29:43.391649 db@open done T·10.0049ms
+09:31:55.447966 db@close closing
+09:31:55.449970 db@close done T·7.0026ms
