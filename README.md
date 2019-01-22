@@ -8,3 +8,4 @@
 - ``geth --datadir ./datadir init .\genesis.json``
 - ``geth account new --datadir .\datadir\``
 - ``geth --datadir ./datadir --networkid 2018 --port 30306 --nodiscover --rpc --rpcapi “db,personal,eth,net,web3,debug” --rpccorsdomain=”*” --rpcaddr=”localhost” --rpcport 8545 console``
+- ``geth --datadir ./datadir --networkid 2018 --port 30306 --nodiscover --rpc --rpcapi “db,personal,eth,net,web3,debug” --rpccorsdomain=”*” --rpcaddr=”localhost” --rpcport 8545 --ws --wsapi "db,personal,eth,net,web3,debug" --wsorigins="*" --wsaddr="localhost" --wsport 8546 console``
