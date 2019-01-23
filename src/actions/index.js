@@ -1,11 +1,11 @@
 import {
-     LOGIN_SUCCESSFUL, 
-     LOGIN_FAILED, 
-     LOGOUT, 
-     SIGNUP_SUCCEEDED, 
-     SIGNUP_FAILED,
-     CHANGE_CONTRACT_ADDRESS, 
-     PLOTS_LOADED
+    LOGIN_SUCCESSFUL,
+    LOGIN_FAILED,
+    LOGOUT,
+    SIGNUP_SUCCEEDED,
+    SIGNUP_FAILED,
+    CHANGE_CONTRACT_ADDRESS,
+    PLOTS_LOADED
 } from "../constants/action-types";
 import _ from 'lodash';
 import Web3 from 'web3';
@@ -15,14 +15,23 @@ import abi from '../contracts/landContract.json';
 let web3 = new Web3();
 web3.setProvider(
     new Web3.providers.WebsocketProvider(
-       //TODO: local blockchain websocket address e.g. 'ws://localhost:8546'
+        //TODO: local blockchain websocket address e.g. 'ws://localhost:8546'
+        'ws://localhost:8546'
     )
 );
 
 export const login = (address, password) => {
     return dispatch => {
-        //TODO: using web3 login and unlock the account
-        console.log('Login not yet implemented');
+        // TODO: using web3 login and unlock the account
+        // console.log('Login not yet implemented');
+        web3.eth.personal.unlockAccount(address, password, 600)
+            .then((response) => {
+                console.info("Login successful:", response);
+                dispatch({ type: LOGIN_SUCCESSFUL, payload: address });
+            }).catch(error => {
+                console.log('Login error:', error);
+                dispatch({ type: LOGIN_FAILED, payload: null });
+            });
     }
 }
 
@@ -33,7 +42,15 @@ export const logout = () => {
 export const signup = (password) => {
     return dispatch => {
         // TODO using web3 create a new accoutn on the blockchain
-        console.log('sign up not yet implemented');
+        // console.log('sign up not yet implemented');
+        web3.eth.personal.newAccount(password)
+            .then(response => {
+                console.info('new account', response);
+                dispatch({ type: SIGNUP_SUCCEEDED, payload: response });
+            }).catch(error => {
+                console.log('error creating account', error);
+                dispatch({ type: SIGNUP_FAILED });
+            });
     }
 }
 
@@ -43,9 +60,52 @@ export const changeContractAddress = (newAddress) => {
         // 1. validate the address is a valid address
         // 2. create an instance of the contract 
         // 3. subscribe to events
-        console.log('changeContractAddress not yet implemented');
+
+        if (web3.utils.isAddress(newAddress)) {
+            let contractInstance = new web3.eth.Contract(abi, newAddress);
+
+            dispatch({ type: CHANGE_CONTRACT_ADDRESS, payload: { contractAddress: newAddress, contractAddressValid: true, contractInstance: contractInstance } });
+
+            loadPlots(contractInstance, dispatch);
+
+            subscribeToEvents(contractInstance, dispatch);
+        } else {
+            dispatch({ type: CHANGE_CONTRACT_ADDRESS, payload: { contractAddress: newAddress, contractAddressValid: false, contractInstance: null } });
+        }
+
+        // console.log('changeContractAddress not yet implemented');
     }
 }
+
+let loadPlots = (contractInstance, dispatch) => {
+    contractInstance.methods.getPlots().call()
+        .then(response => {
+            let plots = _.zipWith(response[0], response[1], response[2], (owner, forSale, price) => {
+                return { owner, forSale, price };
+            });
+
+            dispatch({ type: PLOTS_LOADED, payload: plots });
+        }).catch(error => {
+            console.log(error);
+        });
+};
+
+let subscribeToEvents = (contractInstance, dispatch) => {
+    let plotOwnerChangedEvent = contractInstance.events.PlotOwnerChanged({ fromBlock: 0 }, function (error, event) {
+        console.log('PlotOwnerChanged event : ', event);
+        loadPlots(contractInstance, dispatch);
+    });
+
+    let plotPriceChangedEvent = contractInstance.events.PlotPriceChanged({ fromBlock: 0 }, function (error, event) {
+        console.log('PlotPriceChanged event : ', event);
+        loadPlots(contractInstance, dispatch);
+    });
+
+    let plotAvailabilityChangedEvent = contractInstance.events.PlotAvailabilityChanged({ fromBlock: 0 }, function (error, event) {
+        console.log('PlotAvailabilityChanged event : ', event);
+        loadPlots(contractInstance, dispatch);
+    });
+};
 
 export const clearContractAddress = _ => {
     return dispatch => {
@@ -56,20 +116,44 @@ export const clearContractAddress = _ => {
 export const buyPlot = (contractInstance, plotId, price, userId) => {
     return dispatch => {
         // TODO: using web invoke the buyPlot function of your smart contract
-        console.log('buyPlot not yet implemented');
+        // console.log('buyPlot not yet implemented');
+
+        contractInstance.methods.buyPlot(plotId).send({ value: price, from: userId })
+            .then(response => {
+                console.log(response);
+                loadPlots(contractInstance, dispatch);
+            }).catch(error => {
+                console.log(error);
+            });
     }
 }
 
 export const sellPlot = (contractInstance, plotId, price, userId) => {
     return dispatch => {
         // TODO: using web invoke the putPlotUpForSale function of your smart contract
-        console.log('putPlotUpForSale not yet implemented');
+        // console.log('putPlotUpForSale not yet implemented');
+
+        contractInstance.methods.putPlotUpForSale(plotId, price).send({ from: userId })
+            .then(response => {
+                console.log(response);
+                loadPlots(contractInstance, dispatch);
+            }).catch(error => {
+                console.log(error);
+            });
     }
 }
 
 export const takeOffMarket = (contractInstance, plotId, userId) => {
     return dispatch => {
         // TODO: using web invoke the takeOffMarket function of your smart contract
-        console.log('takeOffMarket not yet implemented');
+        // console.log('takeOffMarket not yet implemented');
+
+        contractInstance.methods.takeOffMarket(plotId).send({ from: userId })
+            .then(response => {
+                console.log(response);
+                loadPlots(contractInstance, dispatch);
+            }).catch(error => {
+                console.log(error);
+            });
     }
 }

@@ -62,3 +62,16 @@
 09:59:34.056593 table@remove removed @2
 10:10:40.967369 db@close closing
 10:10:40.969374 db@close done T·2.0044ms
+=============== Jan 22, 2019 (EET) ===============
+11:55:25.639965 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+11:55:25.645965 version@stat F·[0 1] S·20KiB[0B 20KiB] Sc·[0.00 0.00]
+11:55:25.645965 db@open opening
+11:55:25.645965 journal@recovery F·1
+11:55:25.645965 journal@recovery recovering @12
+11:55:25.650966 memdb@flush created L0@15 N·1 S·161B "n:g..seq,v643":"n:g..seq,v643"
+11:55:25.651964 version@stat F·[1 1] S·20KiB[161B 20KiB] Sc·[0.25 0.00]
+11:55:25.658963 db@janitor F·4 G·0
+11:55:25.658963 db@open done T·12.9976ms
+=============== Jan 23, 2019 (EET) ===============
+08:59:34.614916 db@close closing
+08:59:34.619918 db@close done T·6.0032ms
