@@ -75,3 +75,49 @@
 =============== Jan 23, 2019 (EET) ===============
 08:59:34.614916 db@close closing
 08:59:34.619918 db@close done T·6.0032ms
+=============== Jan 23, 2019 (EET) ===============
+12:09:49.345627 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+12:09:49.345627 version@stat F·[1 1] S·20KiB[161B 20KiB] Sc·[0.25 0.00]
+12:09:49.345627 db@open opening
+12:09:49.345627 journal@recovery F·1
+12:09:49.345627 journal@recovery recovering @16
+12:09:49.352623 memdb@flush created L0@18 N·1 S·161B "n:g..seq,v645":"n:g..seq,v645"
+12:09:49.352623 version@stat F·[2 1] S·20KiB[322B 20KiB] Sc·[0.50 0.00]
+12:09:49.367622 db@janitor F·5 G·0
+12:09:49.367622 db@open done T·21.9962ms
+16:53:04.327140 db@close closing
+16:53:04.332140 db@close done T·4.9999ms
+=============== Jan 24, 2019 (EET) ===============
+10:13:44.345063 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+10:13:44.348060 version@stat F·[2 1] S·20KiB[322B 20KiB] Sc·[0.50 0.00]
+10:13:44.348060 db@open opening
+10:13:44.348060 journal@recovery F·1
+10:13:44.349060 journal@recovery recovering @19
+10:13:44.356063 memdb@flush created L0@21 N·1 S·161B "n:g..seq,v647":"n:g..seq,v647"
+10:13:44.357061 version@stat F·[3 1] S·21KiB[483B 20KiB] Sc·[0.75 0.00]
+10:13:44.364062 db@janitor F·6 G·0
+10:13:44.364062 db@open done T·16.0017ms
+=============== Jan 27, 2019 (EET) ===============
+21:29:45.441953 db@close closing
+21:29:45.442955 db@close done T·2.0069ms
+=============== Jan 28, 2019 (EET) ===============
+10:07:01.039239 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+10:07:01.045240 version@stat F·[3 1] S·21KiB[483B 20KiB] Sc·[0.75 0.00]
+10:07:01.045240 db@open opening
+10:07:01.045240 journal@recovery F·1
+10:07:01.045240 journal@recovery recovering @22
+10:07:01.049240 memdb@flush created L0@24 N·1 S·161B "n:g..seq,v649":"n:g..seq,v649"
+10:07:01.051240 version@stat F·[4 1] S·21KiB[644B 20KiB] Sc·[1.00 0.00]
+10:07:01.059239 db@janitor F·7 G·0
+10:07:01.060239 db@open done T·14.9994ms
+10:07:01.060239 table@compaction L0·4 -> L1·1 S·21KiB Q·650
+10:07:01.093240 table@build created L1@27 N·575 S·20KiB "n:\x00..ing,v7":"version,v1"
+10:07:01.093240 version@stat F·[0 1] S·20KiB[0B 20KiB] Sc·[0.00 0.00]
+10:07:01.095240 table@compaction committed F-4 S-644B Ke·0 D·4 T·31.9991ms
+10:07:01.095240 table@remove removed @24
+10:07:01.095240 table@remove removed @21
+10:07:01.096240 table@remove removed @18
+10:07:01.096240 table@remove removed @15
+10:07:01.097241 table@remove removed @14
+10:40:49.420510 db@close closing
+10:40:49.422507 db@close done T·1.9978ms
